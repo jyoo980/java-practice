@@ -36,16 +36,12 @@ public class CompassCard {
         return false;
     }
 
+    private boolean payCorrectFare(Rider r) {
+        return false;
+    }
+
     private boolean deductFare(double fare) {
         return false;
-    }
-
-    private boolean useStoredValue(double fare) {
-        return false;
-    }
-
-    private void loadPoints(double cents) {
-
     }
 
 }
