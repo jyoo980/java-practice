@@ -1,30 +1,16 @@
 package model;
 
-public class Convertible {
+public class Convertible extends Car {
 
     public static final double CONVERTIBLE_TOP_SPEED = 150.00;
     public static final int CONVERTIBLE_GAS_CAPACITY = 80;
 
-    private int year;
-    private String make;
     private boolean isTopDown;
-    private int currentSpeed;
-    private int currentGasCapacity;
 
     public Convertible(int year, String make) {
-        this.year = year;
-        this.make = make;
+        super(year, make);
         isTopDown = false;
-        currentSpeed = 0;
-        currentGasCapacity = 0;
-    }
 
-    public int getYear() {
-        return year;
-    }
-
-    public String getMake() {
-        return make;
     }
 
     public boolean isTopDown() {
@@ -33,26 +19,13 @@ public class Convertible {
 
     public void putTopDown() { isTopDown = true; }
 
-    public int getCurrentSpeed() {
-        return currentSpeed;
-    }
-
-    public int getCurrentGasCapacity() {
-        return currentGasCapacity;
-    }
-
-    public void brake() {
-        currentSpeed = 0;
-    }
-
     // MODIFIES: this
     // REQUIRES: this car's top needs to be down if the current speed is greater than 50
     //           otherwise, you can freely accelerate
     // EFFECTS: this car's currentSpeed
     public void accelerate(int delta) {
         if (canAccelerate()) {
-            currentSpeed += delta;
-            currentGasCapacity--;
+            super.accelerate(delta);
         }
     }
 
@@ -62,8 +35,7 @@ public class Convertible {
 
     public boolean fillGas(int amount) {
         if (canFillUp(amount)) {
-            currentGasCapacity += amount;
-            return true;
+           return super.fillGas(amount);
         } else {
             return false;
         }
