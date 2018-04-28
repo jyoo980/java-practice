@@ -61,7 +61,7 @@ public class Account {
         return bank;
     }
 
-    private void registerBank(Bank bank) {
+    public void registerBank(Bank bank) {
         if (this.bank == null) {
             this.bank = bank;
         }

@@ -7,5 +7,4 @@ public class RegularAccount extends Account {
     public RegularAccount(String owner, Bank bank) {
        super(bank, owner, INITAL_DEBIT_LIMIT);
     }
-
 }
