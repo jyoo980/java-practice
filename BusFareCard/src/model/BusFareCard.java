@@ -1,5 +1,9 @@
 package model;
 
+import exceptions.IllegalValueException;
+import exceptions.IncorrectAgeException;
+import exceptions.NoFareException;
+
 public class BusFareCard {
 
     private static final int AGE_CUTOFF = 18;
@@ -10,11 +14,15 @@ public class BusFareCard {
     private double balance;
     private boolean fareLoaded;
 
-    public BusFareCard(String nm, int age, double initialLoad) {
-        ownerName = nm;
-        ownerAge = age;
-        balance = initialLoad;
-        fareLoaded = true;
+    public BusFareCard(String nm, int age, double initialLoad) throws IllegalValueException {
+        if (nm.equals("") || age <= 0 || initialLoad <= 0) {
+            throw new IllegalValueException("Invalid name, age, or initial balance");
+        } else {
+            ownerName = nm;
+            ownerAge = age;
+            balance = initialLoad;
+            fareLoaded = true;
+        }
     }
 
     // getters
@@ -23,8 +31,12 @@ public class BusFareCard {
     public double getBalance() { return balance; }
     public boolean isFareLoaded() { return fareLoaded; }
 
-    public void purchaseAdultFare() {
-        if (ownerAge >= AGE_CUTOFF && balance - ADULT_FARE >= 0) {
+    public void purchaseAdultFare() throws IllegalValueException, IncorrectAgeException {
+        if (ownerAge < AGE_CUTOFF) {
+            throw new IncorrectAgeException("You are under 18, purchase a concession ticket!");
+        } else if (balance - ADULT_FARE < 0) {
+            throw new IllegalValueException("Not enough money to purchase a fare!");
+        } else {
             balance -= ADULT_FARE;
             fareLoaded = true;
         }
@@ -37,15 +49,19 @@ public class BusFareCard {
         }
     }
 
-    public void reloadBalance(double amount) {
+    public void reloadBalance(double amount) throws IllegalValueException {
         if (amount > 0) {
             balance += amount;
+        } else {
+            throw new IllegalValueException("Invalid reload amount");
         }
     }
 
-    public void boardBus() {
+    public void boardBus() throws NoFareException {
         if (fareLoaded) {
             fareLoaded = false;
+        } else {
+            throw new NoFareException("No fare! Cannot board bus!\n");
         }
     }
 }
